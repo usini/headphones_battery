@@ -1,0 +1,4 @@
+headphones_battery.build
+headphones_battery.dist
+__pycache__
+settings/config.json

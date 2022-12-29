@@ -1,0 +1,24 @@
+
+{
+    "Headphones Battery": "Headphones Battery",
+    "Connection": "Connection",
+    "Connected": "Connected",
+    "Find my headphones": "Find my headphones",
+    "Close": "Close",
+    "Reset Widget Position":"Reset Widget Position",
+    "Saving": "Saving",
+    "MAC Address saved" :  "MAC Address saved",
+    "Error": "Error",
+    "Invalid Battery Characteristic": "Invalid Battery Characteristic",
+    "Settings":"Settings",
+    "Headphones MAC Address": "Headphones MAC Address",
+    "UUID Battery Characteristic": "UUID Battery Characteristic",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Scan": "Scan",
+    "Bluetooth Scan": "Bluetooth Scan",
+    "UUID Scan": "UUID Scan",
+    "Access denied": "Access denied",
+    "Disconnected": "Disconnected",
+    "Unknown": "Unknown"
+}

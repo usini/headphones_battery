@@ -1,0 +1,1 @@
+nuitka --standalone --enable-plugin=tk-inter --disable-console --include-data-dir=images=images --include-data-dir=settings=settings --windows-icon-from-ico=images/png/icon.png headphones_battery.py

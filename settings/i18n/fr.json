@@ -1,0 +1,24 @@
+
+{
+    "Headphones Battery": "Batterie Casque",
+    "Connection": "Connexion",
+    "Connected": "Connecté",
+    "Find my headphones": "Trouver mon casque",
+    "Close": "Fermez",
+    "Reset Widget Position":"Remettre à zéro la position du Widget",
+    "Saving": "Sauvegarde",
+    "MAC Address saved" :  "Adresse Mac sauvegardée",
+    "Error": "Erreur",
+    "Invalid Battery Characteristic": "Caractéristique de batterie incorrecte",
+    "Settings":"Configuration",
+    "Headphones MAC Address": "Adresse MAC du casque",
+    "UUID Battery Characteristic": "Caractéristique de batterie UUID",
+    "Cancel": "Annuler",
+    "Save": "Enregistrer",
+    "Scan": "Scan",
+    "Bluetooth Scan": "Scan Bluetooth",
+    "UUID Scan": "Scan UUID",
+    "Access denied": "Accés refusé",
+    "Disconnected": "Déconnecté",
+    "Unknown": "Inconnu"
+}
