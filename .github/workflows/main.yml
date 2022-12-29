@@ -1,0 +1,36 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pillow bleak asyncio screeninfo locale
+          pip install nuitka
+      - name: Build application
+        run: nuitka --standalone --enable-plugin=tk-inter --disable-console --include-data-dir=images=images --include-data-dir=settings=settings --windows-icon-from-ico=images/png/icon.png headphones_battery.py
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          draft: false
+          prerelease: false
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: headphones_battery.zip
+          path: headphones_battery/dist
