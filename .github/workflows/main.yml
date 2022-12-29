@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: headphones_battery-${{ env.SHORT_SHA }}.zip
-          path: headphones_battery/dist
+          path: ./headphones_battery-${{ env.SHORT_SHA }}.zip
