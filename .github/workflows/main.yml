@@ -33,8 +33,12 @@ jobs:
           release_name: Release ${{ env.SHORT_SHA }}
           draft: false
           prerelease: false
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+      - name: Upload artifact to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: headphones_battery-${{ env.SHORT_SHA }}.zip
-          path: ./headphones_battery-${{ env.SHORT_SHA }}.zip
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./headphones_battery-${{ env.SHORT_SHA }}.zip
+          asset_name: headphones_battery-${{ env.SHORT_SHA }}.zip
+          asset_content_type: application/zip
