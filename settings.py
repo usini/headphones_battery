@@ -39,21 +39,24 @@ class Settings:
     def read(self):
         """Load the `get` dictionary from a file"""
         print("Loading")
-        with open('settings/config.json', 'r') as config_file:
-            try:
-                temp_config = json.load(config_file)
-                if(temp_config["win_x"] > temp_config["width"]):
-                    print("Window is offscreen (X)")
-                    temp_config["win_x"] = 10
-                if(temp_config["win_y"] > temp_config["height"]):
-                    print("Window is offscreen (Y)")
-                    temp_config["win_y"] = 10
-                print(temp_config["headphones_mac"])
-                print(temp_config["headphones_battery_uuid_charateristic"])
-                self.get = temp_config
-            except:
-                print("Corrupted configuration file")
-                self.write()
+        if not os.path.exists('settings/config.json'):
+            self.write()
+        else:
+            with open('settings/config.json', 'r') as config_file:
+                try:
+                    temp_config = json.load(config_file)
+                    if(temp_config["win_x"] > temp_config["width"]):
+                        print("Window is offscreen (X)")
+                        temp_config["win_x"] = 10
+                    if(temp_config["win_y"] > temp_config["height"]):
+                        print("Window is offscreen (Y)")
+                        temp_config["win_y"] = 10
+                    print(temp_config["headphones_mac"])
+                    print(temp_config["headphones_battery_uuid_charateristic"])
+                    self.get = temp_config
+                except:
+                    print("Corrupted configuration file")
+                    self.write()
 
     def load(self):
         """Load the `get` dictionary from a file if it exists, otherwise create a new one"""
