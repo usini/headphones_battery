@@ -21,7 +21,7 @@ jobs:
       - name: Get Short SHA
         run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
       - name: Build application
-        run: nuitka --standalone --enable-plugin=tk-inter --disable-console --include-data-dir=images=images --include-data-dir=settings=settings --windows-icon-from-ico=images/png/icon.png headphones_battery.py
+        run: nuitka --assume-yes-for-downloads --standalone --enable-plugin=tk-inter --disable-console --include-data-dir=images=images --include-data-dir=settings=settings --windows-icon-from-ico=images/png/icon.png headphones_battery.py
       - name: Compress Application
         run: Compress-Archive ./headphones_battery.dist headphones_battery-${{ env.SHORT_SHA }}.zip
       - name: Create release
