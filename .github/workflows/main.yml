@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pillow bleak asyncio screeninfo pystray
+          pip install pillow bleak screeninfo pystray
           pip install nuitka imageio
       - name: Get Short SHA
         run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
