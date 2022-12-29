@@ -212,7 +212,7 @@ class Widget:
         else:
             print("UUID invalide")
         if check_uuid is True and check_mac is True:
-            tkinter.messagebox.showinfo(self._["Saving"], self._["Mac Address saved"])
+            tkinter.messagebox.showinfo(self._["Saving"], self._["MAC Address saved"])
             self.settings.get["headphones_mac"] = mac
             self.settings.get["headphones_battery_uuid_charateristic"] = uuid
             self.settings.write()

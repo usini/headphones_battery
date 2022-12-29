@@ -8,6 +8,7 @@
     "Reset Widget Position":"Remettre à zéro la position du Widget",
     "Saving": "Sauvegarde",
     "MAC Address saved" :  "Adresse Mac sauvegardée",
+    "Invalid Mac Address" : "Adresse MAC incorrecte",
     "Error": "Erreur",
     "Invalid Battery Characteristic": "Caractéristique de batterie incorrecte",
     "Settings":"Configuration",

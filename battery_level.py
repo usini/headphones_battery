@@ -59,7 +59,7 @@ class BatteryLevel:
                         if(self.device_not_founded_counter == 10):
                             retry = 300
                             print("Headphones not connected, retry in 5 minutes")
-                            self.widget.tooltip["text"] = self.widget._["Déconnecté"]
+                            self.widget.tooltip["text"] = self.widget._["Disconnected"]
                             self.widget.tray_icon_update()
                         else:
                             retry = 1
