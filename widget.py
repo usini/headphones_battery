@@ -96,8 +96,7 @@ class Widget:
         self.running = False
         self.settings.fd.close()
         os._exit(0)
-
-    
+ 
     def change_position(self, instance, icon, item):
         self.root.geometry("+10+10")
         print("Saving position")
@@ -107,6 +106,7 @@ class Widget:
 
     def start(self):
         #self.open_config_window(self)
+        #self.open_scan_window(self)
         print("Starting Widget - ")
         self.root.mainloop()
 
@@ -224,46 +224,6 @@ class Widget:
                 tkinter.messagebox.showerror(self._["Error"], self._["Invalid Battery Characteristic"])
             print("Error")
 
-    def open_config_window(self, instance):
-        self.config_window = tk.Toplevel(self.root)
-        self.config_window.title(self._["Settings"])
-        self.config_window.resizable(width=False, height=False)
-
-        self.root.bind("<Button-3>", lambda event: self.context_menu.post(event.x_root, event.y_root))      
-
-        mac = tk.StringVar(value=self.settings.get["headphones_mac"])
-        uuid = tk.StringVar(value=self.settings.get["headphones_battery_uuid_charateristic"])
-
-        canvas = tk.Canvas(self.config_window)
-        canvas.configure(width=220,height=120)
-        canvas.pack(side="left")
-        frame = tk.Frame(canvas)
-        canvas.create_window((0, 0), window=frame, anchor="nw")
-        
-        headphones_mac_label = tk.Label(frame, text=self._["Headphones MAC Address"] + ":")
-        # Créez des widgets Entry et utilisez les variables de chaîne pour stocker les valeurs saisies par l'utilisateur
-        self.headphones_mac_entry = tk.Entry(frame, textvariable=mac)
-
-        headphones_battery_uuid_label = tk.Label(frame, text=self._["UUID Battery Characteristic"] + ":")
-        self.headphones_battery_uuid_entry = tk.Entry(frame, textvariable=uuid)
-
-        self.headphones_mac_entry.config(width=len(self.headphones_mac_entry.get()))
-        self.headphones_battery_uuid_entry.config(width=len(self.headphones_battery_uuid_entry.get()))
-
-        headphones_mac_label.pack()
-        self.headphones_mac_entry.pack(expand=True)
-        headphones_battery_uuid_label.pack()
-        self.headphones_battery_uuid_entry.pack(expand=True)
-        # Ajoutez les widgets à la fenêtre de configuration       
-    
-        button_frame = tk.Frame(frame)
-        button_frame.pack(side="bottom", pady=10)
-    
-        cancel_button = tk.Button(button_frame, text=self._["Cancel"], command=self.config_window.destroy)
-        cancel_button.pack(side="left")
-        save_button = tk.Button(button_frame, text=self._["Save"], command=partial(self.save_config, self))
-        save_button.pack(side="left")
-
     def start_scan_uuid(self, instance):
         print("Starting UUID Scan")
         self.scan_uuid_button.config(state="disabled")
@@ -319,11 +279,85 @@ class Widget:
             self.scan_button.config(state="normal")
             self.scan_uuid_button.config(state="normal")
 
+    def save_scan(self, instance):
+        mac = self.values[self.option.current()].split("-")[len(self.values[self.option.current()].split("-")) -1].strip()
+        uuid = self.values_uuid[self.option_uuid.current()].split("-")
+        uuid.pop()
+        uuid = "-".join(uuid).strip()
+        mac_regex = r"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
+        uuid_regex = r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+
+        check_mac = False
+        check_uuid = False
+        if re.match(mac_regex, mac):
+            print(mac)
+            check_mac = True
+        else:
+            print("Invalid MAC Address")
+        if re.match(uuid_regex, uuid):
+            check_uuid = True
+            print(uuid)
+        else:
+            print("UUID invalide")
+        if check_uuid is True and check_mac is True:
+            tkinter.messagebox.showinfo(self._["Saving"], self._["MAC Address saved"])
+            self.settings.get["headphones_mac"] = mac
+            self.settings.get["headphones_battery_uuid_charateristic"] = uuid
+            self.settings.write()
+            self.scan_window.destroy()
+        else:
+            if check_mac is False:
+                tkinter.messagebox.showerror(self._["Error"], self._["Invalid Mac Address"])
+            if check_uuid is False:
+                tkinter.messagebox.showerror(self._["Error"], self._["Invalid Battery Characteristic"])
+            print("Error")
+
+
+    def open_config_window(self, instance):
+        self.config_window = tk.Toplevel(self.root)
+        self.config_window.title(self._["Settings"])
+        self.config_window.resizable(width=False, height=False)
+
+        self.root.bind("<Button-3>", lambda event: self.context_menu.post(event.x_root, event.y_root))      
+
+        mac = tk.StringVar(value=self.settings.get["headphones_mac"])
+        uuid = tk.StringVar(value=self.settings.get["headphones_battery_uuid_charateristic"])
+
+        canvas = tk.Canvas(self.config_window)
+        canvas.configure(width=220,height=120)
+        canvas.pack(side="left")
+        frame = tk.Frame(canvas)
+        canvas.create_window((0, 0), window=frame, anchor="nw")
+        
+        headphones_mac_label = tk.Label(frame, text=self._["Headphones MAC Address"] + ":")
+        # Créez des widgets Entry et utilisez les variables de chaîne pour stocker les valeurs saisies par l'utilisateur
+        self.headphones_mac_entry = tk.Entry(frame, textvariable=mac)
+
+        headphones_battery_uuid_label = tk.Label(frame, text=self._["UUID Battery Characteristic"] + ":")
+        self.headphones_battery_uuid_entry = tk.Entry(frame, textvariable=uuid)
+
+        self.headphones_mac_entry.config(width=len(self.headphones_mac_entry.get()))
+        self.headphones_battery_uuid_entry.config(width=len(self.headphones_battery_uuid_entry.get()))
+
+        headphones_mac_label.pack()
+        self.headphones_mac_entry.pack(expand=True)
+        headphones_battery_uuid_label.pack()
+        self.headphones_battery_uuid_entry.pack(expand=True)
+        # Ajoutez les widgets à la fenêtre de configuration       
+    
+        button_frame = tk.Frame(frame)
+        button_frame.pack(side="bottom", pady=10)
+    
+        cancel_button = tk.Button(button_frame, text=self._["Cancel"], command=self.config_window.destroy)
+        cancel_button.pack(side="left")
+        save_button = tk.Button(button_frame, text=self._["Save"], command=partial(self.save_config, self))
+        save_button.pack(side="left")
+
     def open_scan_window(self, instance):
         # Créez la nouvelle fenêtre
         self.scan_window = tk.Toplevel(self.root)
         self.scan_window.title(self._["Scan"])
-
+        self.scan_window.resizable(width=False, height=False)
         # Créez le champ de choix
         self.values = [self._["Bluetooth Scan"]]
         self.option = ttk.Combobox(self.scan_window, values = self.values)
@@ -346,7 +380,18 @@ class Widget:
 
         # Créez un widget Frame pour contenir le bouton "SCAN"
         button_frame2 = tk.Frame(self.scan_window)
-        button_frame2.pack(side="bottom", anchor="center")
+        button_frame2.pack(anchor="center")
         self.scan_uuid_button = tk.Button(button_frame2, text=self._["UUID Scan"], command=partial(self.start_scan_uuid,self))
         self.scan_uuid_button.pack(side="bottom")
         self.scan_uuid_button.config(state="disabled")
+        
+        button_frame = tk.Frame(self.scan_window)
+        button_frame.pack(side="bottom", pady=10)
+    
+        cancel_button = tk.Button(button_frame, text=self._["Cancel"], command=self.scan_window.destroy)
+        cancel_button.pack(side="left")
+        save_button = tk.Button(button_frame, text=self._["Save"], command=partial(self.save_scan, self))
+        save_button.pack(side="left")
+
+
+
