@@ -82,6 +82,7 @@ class Widget:
 
         self.tray_image = image = Image.open("images/png/icon.png")
         self.tray_menu = pystray.Menu(
+            pystray.MenuItem(self._["Show"], partial(self.force_lift_widget, self)),
             pystray.MenuItem(self._["Reset Widget Position"], partial(self.change_position, self)),
             pystray.MenuItem(self._["Close"], partial(self.on_quit_clicked, self))
             )
@@ -135,6 +136,9 @@ class Widget:
                 "100":tk.PhotoImage(file="images/png/battery_full.png")
             }
         }
+
+    def force_lift_widget(self, instance, icon, item):
+        self.root.lift()
 
     def force_lift(self):
         while True:

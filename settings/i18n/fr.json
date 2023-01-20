@@ -21,5 +21,6 @@
     "UUID Scan": "Scan UUID",
     "Access denied": "Accés refusé",
     "Disconnected": "Déconnecté",
-    "Unknown": "Inconnu"
+    "Unknown": "Inconnu",
+    "Show":"Afficher"
 }
