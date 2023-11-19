@@ -46,7 +46,7 @@ class BatteryLevel:
                     print(str(e))
                     if "Access Denied" in str(e):
                         print("Access denied to battery level")
-                        self.widget.tooltip["text"] = self.wdiget._["Access denied"]
+                        self.widget.tooltip["text"] = self.widget._["Access denied"]
                         self.widget.tray_icon_update()
                         retry = 1
                         self.device_not_founded_counter = 0
